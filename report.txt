@@ -1,0 +1,43 @@
+Abhijeet Choudhary(2022CS11104)		Satwik(2022CS51150)
+
+
+Report on the Havannah-Playing Agent
+1. Introduction
+This report outlines the development of a Havannah-playing agent, starting with the implementation of basic Monte Carlo Tree Search (MCTS), followed by the integration of advanced techniques and heuristics. The core focus was to optimize the agent's performance for different board dimensions, particularly dimensions 4 and 6. After experimenting with basic MCTS, the agent was enhanced with Last Good Reply (LGR) variation, RAVE (Rapid Action Value Estimation), Prioritized Progressive Rollouts (PPR), and a range of heuristic-based bonuses, which guided the agent's decision-making process during different phases of the game.
+
+2. Monte Carlo Tree Search (MCTS)
+MCTS is a popular decision-making algorithm used for games with large state spaces like Havannah. It works by simulating games from the current state to terminal conditions, backpropagating the results to improve the value estimates of states. However, for larger boards, like the 6x6 dimension in Havannah, basic MCTS struggles due to the exponentially increasing branching factor. This made MCTS insufficient, especially in mid-game scenarios.
+
+3. Last Good Reply (LGR) Variation
+To enhance MCTS performance for smaller boards (like dimension 4), the agent incorporated LGR variation. LGR is a technique that leverages successful responses to the opponent's last move. It builds a knowledge base of favorable replies based on past experiences, reducing the need to explore less optimal moves. This method improved gameplay by exploiting recurring patterns in the game, but it still fell short on larger dimensions and complex game scenarios.
+
+4. Rapid Action Value Estimation (RAVE) and Prioritized Progressive Rollouts (PPR)
+To further boost performance, RAVE was introduced. RAVE accelerates the convergence of MCTS by utilizing not only the immediate rewards from simulated games but also the rewards associated with moves that have been played elsewhere in the game tree. This allows for faster learning of action values, as information from similar states is reused.
+
+In addition to RAVE, the agent employed Prioritized Progressive Rollouts (PPR), a method that prioritizes more promising moves early in the search process. PPR helps balance exploration and exploitation by assigning greater weights to moves that are likely to lead to favorable outcomes. This improvement was especially effective in guiding the agent during the early and middle stages of the game. By tuning the RAVE-PPR parameters, the agent struck an optimal balance between defensive and offensive strategies, adapting to different phases of the game.
+
+Tuning RAVE-PPR
+The RAVE-PPR parameters were carefully adjusted to strike the right balance between attacking and defending. In aggressive strategies, RAVE-PPR was tuned to favor moves near the opponent, while in defensive modes, it was adjusted to prioritize moves that strengthened the agent’s own structure. The ability to fine-tune these parameters allowed for flexible strategies that could adapt to the state of the game.
+
+5. Heuristics for Improved Gameplay
+In addition to algorithmic improvements, a variety of heuristics were introduced to guide the agent's play, particularly during the opening and middle phases of the game. These heuristics helped prioritize key moves that might not be immediately evident from simulations alone.
+
+5.1. Locality Bonus
+A key heuristic involved rewarding moves based on their proximity to previously played moves. Moves that were the first or second neighbors of earlier moves were assigned higher priority. The locality bonus was designed to encourage the formation of virtual connections—critical in Havannah, as these connections can lead to forks and rings, which are key victory conditions. High bonuses were given to moves that were virtual connections, as these connections are effectively unstoppable once formed.
+
+Different bonuses were also applied depending on whether the move was near the agent's own stones or the opponent's stones. This allowed for strategic flexibility, as the bonuses could be tuned to either an attacking (playing near the opponent) or defensive (reinforcing one’s own structure) style of play.
+
+5.2. Edge and Corner Bonuses
+Another important heuristic was to assign bonuses for moves near the edges and corners of the board. Corners are particularly valuable in Havannah, as they can serve as the base for strong structures like forks and rings. Thus, the agent was incentivized to occupy or approach corners early in the game. Similarly, playing near the edges also received bonuses, as controlling edge areas can help form defensive barriers or attacking fronts.
+
+6. Terminal Condition Check using Union-Find
+To efficiently check the game's terminal conditions, particularly for forks and rings, the agent used the Union-Find (Disjoint Set Union, DSU) data structure. This allowed the agent to dynamically track the connectivity of stones and detect when a winning structure had been formed. The Union-Find algorithm is particularly suited for this task, as it provides near-constant time complexity for union and find operations, making it an efficient solution for checking complex winning conditions in Havannah.
+
+7. Conclusion
+The development of the Havannah-playing agent began with a basic MCTS approach, which was improved using LGR variation and RAVE-PPR. The addition of heuristics such as locality bonuses, edge and corner bonuses, and the use of Union-Find for terminal condition checking significantly improved the agent's performance. These enhancements allowed the agent to handle the complexities of different board dimensions, with particular success in the early and middle stages of the game, ultimately leading to more competitive gameplay against both human and AI opponents. The balance between exploration and exploitation, coupled with targeted heuristics, ensured the agent could adapt to various strategic situations, making it a formidable player in Havannah.
+
+
+
+
+
+
